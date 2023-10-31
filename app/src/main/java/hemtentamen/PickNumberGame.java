@@ -16,7 +16,7 @@ public class PickNumberGame {
    * @return - the value of the optimal move
    */
   private static int calculateOptimalFirstMove(int[] list, int first, int last, boolean isMyTurn) {
-    // base case: no numbers left to pick
+    // no numbers left to pick
     if (first > last) {
       return 0;
     }
