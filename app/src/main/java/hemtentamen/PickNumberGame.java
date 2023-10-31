@@ -34,7 +34,7 @@ public class PickNumberGame {
       }
 
     } else {
-      // calculate the score differences if the first or last number is picked for my turn
+      // calculate the score differences if the first or last number is picked for opponents turn
       int scoreDifferenceIfFirstPicked = list[first] - calculateOptimalFirstMove(list, first + 1, last, true);
       int scoreDifferenceIfLastPicked = list[last] - calculateOptimalFirstMove(list, first, last - 1, true);
 
