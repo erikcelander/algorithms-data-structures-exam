@@ -36,17 +36,21 @@ public class PickNumberGame {
   
 
   private static int calculateOptimalFirstMove(int[] list, int p) {
+    int first = 0;
+    int last = list.length - 1;
+    int firstPlayer = 1;
+    
     if (p == 2) {
-      return calculateOptimalFirstMoveForTwoPlayers(list, 0, list.length - 1, true);
+      return calculateOptimalFirstMoveForTwoPlayers(list, first, last, true);
       
     } else if (p > 2 && p <= 10) {
-      int firstNumberSum = calculateOptimalFirstMoveForMoreThanTwoPlayers(list, 1, list.length - 1, 1, p, list[0]);
-      int lastNumberSum = calculateOptimalFirstMoveForMoreThanTwoPlayers(list, 0, list.length - 2, 1, p, list[list.length - 1]);
+      int firstNumberSum = calculateOptimalFirstMoveForMoreThanTwoPlayers(list, first + 1, last, firstPlayer, p, list[first]);
+      int lastNumberSum = calculateOptimalFirstMoveForMoreThanTwoPlayers(list, first, last - 1, firstPlayer, p, list[last]);
 
       if (firstNumberSum < lastNumberSum) {
-        return list[0];
+        return list[first];
       } else {
-        return list[list.length - 1];
+        return list[last];
       }
 
     } else {
@@ -54,18 +58,15 @@ public class PickNumberGame {
     }
   }
 
-
-
-  private static int calculateOptimalFirstMoveForMoreThanTwoPlayers(int[] list, int first, int last, int currentPlayer, int totalPlayers,int currentScore) {
+  private static int calculateOptimalFirstMoveForMoreThanTwoPlayers(int[] list, int first, int last, int currentPlayer, int totalPlayers,int originalNumberToCheck) {
     if (first > last) {
-      return currentScore;
+      return originalNumberToCheck;
     }
 
     int nextPlayer = (currentPlayer + 1) % totalPlayers;
 
- 
-    int firstPickSum = calculateOptimalFirstMoveForMoreThanTwoPlayers(list, first + 1, last, nextPlayer, totalPlayers, currentScore);
-    int lastPickSum = calculateOptimalFirstMoveForMoreThanTwoPlayers(list, first, last - 1, nextPlayer, totalPlayers, currentScore);
+    int firstPickSum = calculateOptimalFirstMoveForMoreThanTwoPlayers(list, first + 1, last, nextPlayer, totalPlayers, originalNumberToCheck);
+    int lastPickSum = calculateOptimalFirstMoveForMoreThanTwoPlayers(list, first, last - 1, nextPlayer, totalPlayers, originalNumberToCheck);
  
     return Math.min(firstPickSum, lastPickSum);
   }
